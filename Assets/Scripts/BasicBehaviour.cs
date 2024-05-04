@@ -12,6 +12,9 @@ public class BasicBehaviour : MonoBehaviour, INetworkRunnerCallbacks
     [FormerlySerializedAs("_runner")] [SerializeField] [Inject]
     private NetworkRunner runner;
 
+    [FormerlySerializedAs("ball")] [SerializeField]
+    GameObject ballPrefab;
+
     private void Start()
     {
         StartGame(GameMode.AutoHostOrClient);
@@ -34,6 +37,13 @@ public class BasicBehaviour : MonoBehaviour, INetworkRunnerCallbacks
             Scene = networkSceneInfo,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
+
+        SpawnBall();
+    }
+
+    private void SpawnBall()
+    {
+        runner.Spawn(ballPrefab);
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
